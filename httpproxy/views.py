@@ -4,8 +4,16 @@ from urllib import urlencode
 from django.conf import settings
 from django.http import HttpResponse
  
- 
-PROXY_FORMAT = u"http://%s:%d/%s" % (settings.PROXY_DOMAIN, settings.PROXY_PORT, u"%s")
+
+try:
+    PROXY_DOMAIN = getattr(settings, 'PROXY_DOMAIN')
+except AttributeError:
+    from django.core.exceptions import ImproperlyConfigured
+    raise ImproperlyConfigured("To use the 'httpproxy' app, please add the PROXY_DOMAIN setting to your settings file.")
+
+PROXY_PORT = getattr(settings, 'PROXY_PORT', 80)
+
+PROXY_FORMAT = u"http://%s:%d/%s" % (PROXY_DOMAIN, PROXY_PORT, u"%s")
 
 def proxy(request, url):
     conn = httplib2.Http()

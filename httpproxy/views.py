@@ -27,10 +27,10 @@ def proxy(request, url):
     if request.method == 'GET':
         url_ending = '%s?%s' % (url, urlencode(request.GET))
         url = PROXY_FORMAT % url_ending
-        resp, content = conn.request(url, request.method)
-        return HttpResponse(content, mimetype=resp['content-type'])
+        response, content = conn.request(url, request.method)
     elif request.method == 'POST':
         url = PROXY_FORMAT % url
         data = urlencode(request.POST)
-        resp, content = conn.request(url, request.method, data)
-        return HttpResponse(content)
+        response, content = conn.request(url, request.method, data)
+    return HttpResponse(content, status=int(response['status']), mimetype=response['content-type'])
+    

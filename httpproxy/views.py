@@ -13,7 +13,7 @@ except AttributeError:
 
 PROXY_PORT = getattr(settings, 'PROXY_PORT', 80)
 
-PROXY_FORMAT = u"http://%s:%d/%s" % (PROXY_DOMAIN, PROXY_PORT, u"%s")
+PROXY_FORMAT = u'http://%s:%d/%s' % (PROXY_DOMAIN, PROXY_PORT, u'%s')
 
 def proxy(request, url):
     conn = httplib2.Http()

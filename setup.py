@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='django-http-proxy',
-    version='0.1alpha1',
+    version='0.1',
     description='A simple HTTP proxy for the Django framework.',
     author='Yuri van der Meer',
     author_email='python.org@yvandermeer.net',

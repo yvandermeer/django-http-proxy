@@ -1,0 +1,1 @@
+# Purposely left empty (needed for Django to be recognized as an "app")

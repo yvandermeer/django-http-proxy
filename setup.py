@@ -8,7 +8,7 @@ setup(
     author='Yuri van der Meer',
     author_email='python.org@yvandermeer.net',
     url='http://bitbucket.org/yvandermeer/django-http-proxy/',
-    download_url='http://bitbucket.org/yvandermeer/django-http-proxy/get/v0.1.tar.gz',
+    download_url='http://bitbucket.org/yvandermeer/django-http-proxy/get/v0.1.zip',
     packages=[
         'httpproxy',
     ],

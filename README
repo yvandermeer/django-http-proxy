@@ -1,2 +1,14 @@
-This is Django HTTP Proxy, a Django application to provide simple HTTP proxy
-functionality.
+Django HTTP Proxy provides simple HTTP proxy functionality for the Django web
+development framework.
+
+One possible use for this application (actually, the reason it was developed)
+is to allow for easy development of Ajax applications against a live server
+environment. 
+
+For instance, you might be developing an Ajax application which end up running
+in an JSP environment. Instead of having to deploy your application on the JSP
+server, you can already test against against the live server environment while
+you develop. All you need is the Django framework, run `manage.py` and you are
+good to go.
+
+Installation instructions can be found in the INSTALL file.

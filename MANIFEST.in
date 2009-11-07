@@ -1,0 +1,4 @@
+include README
+include LICENSE
+include INSTALL
+recursive-include requirements *

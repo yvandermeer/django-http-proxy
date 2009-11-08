@@ -1,6 +1,5 @@
 -*- restructuredtext -*-
 
-=================
 Django HTTP Proxy
 =================
 
@@ -39,13 +38,12 @@ It is also available on the Python Package Index:
 http://pypi.python.org/pypi/django-http-proxy/0.1 
 
 As such, you can easily install the latest release using
-`easy_install <http://pypi.python.org/pypi/setuptools>`_ or 
-`pip <http://pypi.python.org/pypi/pip>`_ :
+`easy_install <http://pypi.python.org/pypi/setuptools>`_::
 
 	$ easy_install django-http-proxy
 
-or
-::
+or using `pip <http://pypi.python.org/pypi/pip>`_::
+
 	$ pip install django-http-proxy
 
 Usage
@@ -59,5 +57,6 @@ Contributing
 
 If you have any contributions, feel free to fork Django HTTP Proxy on
 Bitbucket: 
+
 http://bitbucket.org/yvandermeer/django-http-proxy/fork/
 

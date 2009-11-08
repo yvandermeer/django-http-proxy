@@ -1,9 +1,23 @@
+Django HTTP Proxy
+=================
+
 Django HTTP Proxy provides simple HTTP proxy functionality for the Django web
 development framework.
+
+Motivation
+----------
 
 One possible use for this application (actually, the reason it was developed)
 is to allow for easy development of Ajax applications against a live server
 environment. 
+
+The built-in `Django development server <http://docs.djangoproject.com/en/dev/ref/django-admin/#runserver>`_
+already makes Django a wonderful tool for front-end developers needing a quick
+way to set up a HTTP server. Now, with
+`Django HTTP Proxy <http://bitbucket.org/yvandermeer/django-http-proxy/>`_ you
+can seamlessly integrate your front-end work with a live back-end. No more
+ugly PHP proxy scripts, and no more "standalone" vs "integrated" switches in a
+client-side Communication Controller (unless you really want to of course!).
 
 For instance, you might be developing an Ajax application which end up running
 in an JSP environment. Instead of having to deploy your application on the JSP
@@ -11,4 +25,36 @@ server, you can already test against against the live server environment while
 you develop. All you need is the Django framework, run `manage.py` and you are
 good to go.
 
-Installation instructions can be found in the INSTALL file.
+Installation
+------------
+
+Largely based on `a blog post by Will Larson <http://lethain.com/entry/2008/sep/30/suffer-less-by-using-django-dev-server-as-a-proxy/>`_,
+Django HTTP Proxy is maintained as open-source software on Bitbucket:
+http://bitbucket.org/yvandermeer/django-http-proxy/ 
+
+It is also available on the Python Package Index:
+http://pypi.python.org/pypi/django-http-proxy/0.1 
+
+As such, you can easily install the latest release using
+`easy_install <http://pypi.python.org/pypi/setuptools>`_ or 
+`pip <http://pypi.python.org/pypi/pip>`_ :
+
+	$ easy_install django-http-proxy
+
+or
+::
+	$ pip install django-http-proxy
+
+Usage
+-----
+
+For further documentation on installing Django HTTP Proxy and using it, see
+the INSTALL file.
+  
+Contributing
+------------
+
+If you have any contributions, feel free to fork Django HTTP Proxy on
+Bitbucket: 
+http://bitbucket.org/yvandermeer/django-http-proxy/fork/
+

@@ -1,8 +1,9 @@
 import httplib2
-from urllib import urlencode
  
 from django.conf import settings
 from django.http import HttpResponse
+
+from httpproxy.decorators import record, play
  
 
 try:
@@ -15,6 +16,11 @@ PROXY_PORT = getattr(settings, 'PROXY_PORT', 80)
 
 PROXY_FORMAT = u'http://%s:%d/%s' % (PROXY_DOMAIN, PROXY_PORT, u'%s')
 
+# PROXY_MODE = getattr(settings, 'PROXY_MODE')
+PROXY_MODE = ''
+# PROXY_MODE = 'record'
+PROXY_MODE = 'play'
+
 def proxy(request, url):
     conn = httplib2.Http()
     
@@ -25,12 +31,18 @@ def proxy(request, url):
         pass
     
     if request.method == 'GET':
-        url_ending = '%s?%s' % (url, urlencode(request.GET))
+        url_ending = '%s?%s' % (url, request.GET.urlencode())
         url = PROXY_FORMAT % url_ending
         response, content = conn.request(url, request.method)
     elif request.method == 'POST':
         url = PROXY_FORMAT % url
-        data = urlencode(request.POST)
+        data = request.POST.urlencode()
         response, content = conn.request(url, request.method, data)
     return HttpResponse(content, status=int(response['status']), mimetype=response['content-type'])
+
+if PROXY_MODE == 'record':
+    proxy = record(proxy)
+elif PROXY_MODE == 'play':
+    proxy = play(proxy)
+
     

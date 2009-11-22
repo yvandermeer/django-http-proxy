@@ -1,6 +1,5 @@
 import logging
 
-from django.conf import settings
 from django.http import HttpResponse
 
 from httpproxy.exceptions import RequestNotRecorded
@@ -15,8 +14,9 @@ class ProxyRecorder(object):
     Facilitates recording and playback of Django HTTP requests and responses.
     """
     
-    def __init__(self):
+    def __init__(self, domain, port=80):
         super(ProxyRecorder, self).__init__()
+        self.domain, self.port = domain, port
     
     def record_request(self, request):
         """
@@ -25,8 +25,8 @@ class ProxyRecorder(object):
         logger.info('Recording: GET "%s"' % self._request_string(request))
         
         recorded_request, created = Request.objects.get_or_create(
-            domain=settings.PROXY_DOMAIN,
-            port=settings.PROXY_PORT,
+            domain=self.domain,
+            port=self.port,
             path=request.path,
             querystring=request.GET.urlencode(),
         )
@@ -70,7 +70,7 @@ class ProxyRecorder(object):
         """
         try:
             matching_request = Request.objects.filter(
-                domain=settings.PROXY_DOMAIN, 
+                domain=self.domain, 
                 path=request.path, 
                 querystring=request.GET.urlencode()
             ).latest()
@@ -98,7 +98,7 @@ class ProxyRecorder(object):
         Helper for getting a string representation of a request.
         """
         return '%(domain)s:%(port)d%(path)s"' % {
-            'domain': settings.PROXY_DOMAIN, 
-            'port': settings.PROXY_PORT, 
+            'domain': self.domain, 
+            'port': self.port, 
             'path': request.get_full_path()
         }

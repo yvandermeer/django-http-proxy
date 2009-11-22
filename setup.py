@@ -19,7 +19,7 @@ setup(
     author='Yuri van der Meer',
     author_email='django-http-proxy@yvandermeer.net',
     url='http://httpproxy.yvandermeer.net/',
-    download_url='http://bitbucket.org/yvandermeer/django-http-proxy/get/v0.1.zip',
+    download_url='http://bitbucket.org/yvandermeer/django-http-proxy/get/v0.2.zip',
     packages=[
         'httpproxy',
     ],

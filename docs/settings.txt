@@ -1,0 +1,65 @@
+Available settings
+==================
+
+The Django HTTP Proxy application has only a single *required* setting
+(``PROXY_DOMAIN``) and a number of optional settings.
+
+Any settings should be placed in your project's settings module (most commonly
+``settings.py``).
+
+PROXY_DOMAIN
+------------
+Default: Not defined
+
+The domain that the proxy should forward to. Example::
+
+    PROXY_DOMAIN = 'www.google.com'
+
+PROXY_PORT
+----------
+Default: ``80``
+
+The port that the proxy should forward to on the provided ``PROXY_DOMAIN``. Example::
+
+    PROXY_PORT = 7777
+
+PROXY_USER
+----------
+Default: Not defined
+
+The username for authentication to the server that requests are forwarded to. Example::
+
+    PROXY_USER = 'yuri'
+
+PROXY_PASSWORD
+--------------
+Default: Not defined
+
+The password for authentication to the server that requests are forwarded to. Example::
+
+    PROXY_PASSWORD = 'secret'
+
+.. _setting-proxy-mode:
+
+PROXY_MODE
+----------
+Default: ``None``
+
+The mode that the proxy should run in. Available modes are ``record`` and 
+``play``. If no mode is defined (``None`` – the default), this means the proxy
+will work as a "standard" HTTP proxy.
+
+If the mode is set to ``record``, all requests will be forwarded to the remote
+server, but both the requests and responses will be recorded to the database
+for playback at a later stage::
+    
+    PROXY_MODE = 'record'
+
+If the mode is set to ``play``, *no requests will be forwarded to the remote
+server*.::
+
+    PROXY_MODE = 'play'
+    
+In ``play`` mode, if the response (to the request being made) was previously
+recorded, the recorded response will be served. Otherwise, a custom
+``Http404`` exception will be raised (``RequestNotRecorded``)

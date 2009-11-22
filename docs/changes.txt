@@ -1,0 +1,15 @@
+Changes & News
+--------------
+
+0.2
+~~~
+
+* Added recording and playback functionality (see the new :ref:`setting-proxy-mode` setting)
+* Improved handling of ``httpproxy``-specific settings
+* Started using Sphinx for documentation
+
+0.1
+~~~
+
+* Initial release
+* Basic HTTP proxy functionality based on `a blog post by Will Larson <http://lethain.com/entry/2008/sep/30/suffer-less-by-using-django-dev-server-as-a-proxy/>`_

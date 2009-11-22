@@ -1,6 +1,7 @@
 syntax:glob
+*.pyc
+.DS_Store
+MANIFEST
 build
 dist
-MANIFEST
-.DS_Store
-*.pyc
+docs/_build

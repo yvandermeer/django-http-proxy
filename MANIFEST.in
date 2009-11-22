@@ -2,4 +2,5 @@ include AUTHORS
 include INSTALL
 include LICENSE
 include README
+recursive-include docs *.txt
 recursive-include requirements *

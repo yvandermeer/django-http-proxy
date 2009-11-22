@@ -1,12 +1,14 @@
 from distutils.core import setup
 
+from httpproxy import __version__
+
 
 setup(
     name='django-http-proxy',
-    version='0.1',
+    version=__version__,
     description='A simple HTTP proxy for the Django framework.',
     author='Yuri van der Meer',
-    author_email='python.org@yvandermeer.net',
+    author_email='django-http-proxy@yvandermeer.net',
     url='http://bitbucket.org/yvandermeer/django-http-proxy/',
     download_url='http://bitbucket.org/yvandermeer/django-http-proxy/get/v0.1.zip',
     packages=[

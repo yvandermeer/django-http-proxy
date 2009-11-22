@@ -6,7 +6,7 @@ from httpproxy.exceptions import RequestNotRecorded
 from httpproxy.models import Request, Response
 
 
-logger = logging.getLogger('httpproxy')
+logger = logging.getLogger(__package__)
 logger.setLevel(logging.DEBUG)
 
 class ProxyRecorder(object):

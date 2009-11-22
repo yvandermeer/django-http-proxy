@@ -1,10 +1,7 @@
 from django.contrib import admin
 
-from httpproxy.models import Request, Response #, RequestParameter, Response
+from httpproxy.models import Request, Response
 
-
-# class RequestParameterInline(admin.TabularInline):
-#     model = RequestParameter
 
 class ResponseInline(admin.StackedInline):
     model = Response
@@ -12,7 +9,6 @@ class ResponseInline(admin.StackedInline):
 class RequestAdmin(admin.ModelAdmin):
     list_display = ('domain', 'port', 'path', 'querystring', 'date')
     list_filter = ('domain', 'port')
-    # inlines = [RequestParameterInline,]
     inlines = [ResponseInline,]
 
 class ResponseAdmin(admin.ModelAdmin):

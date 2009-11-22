@@ -36,7 +36,7 @@ http://bitbucket.org/yvandermeer/django-http-proxy/
 
 It is also available on the Python Package Index:
 
-http://pypi.python.org/pypi/django-http-proxy/0.1 
+http://pypi.python.org/pypi/django-http-proxy
 
 As such, you can easily install the latest release using
 `easy_install <http://pypi.python.org/pypi/setuptools>`_::

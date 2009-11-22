@@ -1,9 +1,6 @@
-from django.conf import settings
-
+from httpproxy import settings
 from httpproxy.recorder import ProxyRecorder
 
-
-PROXY_CACHE_DURATION = getattr(settings, 'PROXY_CACHE_DURATION', 60 * 60 * 24) # default: 24h
 
 recorder = ProxyRecorder(settings.PROXY_DOMAIN, settings.PROXY_PORT)
 

@@ -14,7 +14,7 @@ class ProxyRecorder(object):
     Facilitates recording and playback of Django HTTP requests and responses.
     """
     
-    def __init__(self, domain, port=80):
+    def __init__(self, domain, port):
         super(ProxyRecorder, self).__init__()
         self.domain, self.port = domain, port
     
@@ -68,9 +68,11 @@ class ProxyRecorder(object):
         """
         Returns a previously recorded response based on the provided request.
         """
+        print self.port
         try:
             matching_request = Request.objects.filter(
-                domain=self.domain, 
+                domain=self.domain,
+                port=self.port,
                 path=request.path, 
                 querystring=request.GET.urlencode()
             ).latest()

@@ -1,21 +1,12 @@
 import httplib2
  
-from django.conf import settings
 from django.http import HttpResponse
 
-from httpproxy.decorators import record, play
+from httpproxy import settings
 from httpproxy.exceptions import UnkownProxyMode
  
 
-try:
-    PROXY_DOMAIN = getattr(settings, 'PROXY_DOMAIN')
-except AttributeError:
-    from django.core.exceptions import ImproperlyConfigured
-    raise ImproperlyConfigured("To use the 'httpproxy' app, please add the PROXY_DOMAIN setting to your settings file.")
-
-PROXY_PORT = getattr(settings, 'PROXY_PORT', 80)
-PROXY_FORMAT = u'http://%s:%d/%s' % (PROXY_DOMAIN, PROXY_PORT, u'%s')
-PROXY_MODE = getattr(settings, 'PROXY_MODE', None)
+PROXY_FORMAT = u'http://%s:%d/%s' % (settings.PROXY_DOMAIN, settings.PROXY_PORT, u'%s')
 
 def proxy(request, url):
     conn = httplib2.Http()
@@ -37,11 +28,12 @@ def proxy(request, url):
     return HttpResponse(content, status=int(response['status']), mimetype=response['content-type'])
 
 
-if PROXY_MODE is not None:
+if settings.PROXY_MODE is not None:
+    proxy_mode = settings.PROXY_MODE
     try:
-        decorator = getattr(__import__(__package__ + '.decorators', fromlist=PROXY_MODE), PROXY_MODE)
+        decorator = getattr(__import__(__package__ + '.decorators', fromlist=proxy_mode), proxy_mode)
     except AttributeError, e:
-        raise UnkownProxyMode('The proxy mode "%s" could not be found. Please specify a corresponding decorator function in "%s.decorators".' % (PROXY_MODE, __package__))
+        raise UnkownProxyMode('The proxy mode "%s" could not be found. Please specify a corresponding decorator function in "%s.decorators".' % (proxy_mode, __package__))
     else:
         proxy = decorator(proxy)
     

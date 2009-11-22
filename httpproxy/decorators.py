@@ -1,10 +1,9 @@
 import logging
 
-from django.core.cache import cache
 from django.conf import settings
-from django.http import HttpResponse, Http404
-from django.utils.cache import get_cache_key, learn_cache_key
+from django.http import HttpResponse
 
+from httpproxy.exceptions import RequestNotRecorded
 from httpproxy.models import Request, Response
 
 
@@ -12,9 +11,6 @@ logger = logging.getLogger('httpproxy')
 logger.setLevel(logging.DEBUG)
 
 PROXY_CACHE_DURATION = getattr(settings, 'PROXY_CACHE_DURATION', 60 * 60 * 24) # default: 24h
-
-class RequestNotRecorded(Http404):
-    pass
 
 def record(fn):
     """

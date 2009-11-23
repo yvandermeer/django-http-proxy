@@ -73,4 +73,4 @@ plain text content types. The default behavior is to ignore any unsupported
 content types when ``PROXY_MODE`` is set to ``record`` – responses with
 unsupported content types are not recorded and will be ignored silently. If
 you set ``PROXY_IGNORE_UNSUPPORTED`` to ``False``, any unsupported response
-types will raise an ``ResponseUnsupported`` exception.
+types will raise a ``ResponseUnsupported`` exception.

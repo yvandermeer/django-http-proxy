@@ -115,7 +115,7 @@ class ProxyRecorder(object):
     
     def _get_encoding(self, content_type):
         """
-        Extracts the character encoding from a HTTP Content-Type header.
+        Extracts the character encoding from an HTTP Content-Type header.
         """
         return content_type.partition('charset=')[-1] or 'utf-8'
         

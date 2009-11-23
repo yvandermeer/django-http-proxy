@@ -6,6 +6,9 @@ Some generic exceptions that can occur in the Django HTTP Proxy.
 class UnkownProxyMode(Exception):
     pass
 
+class ResponseUnsupported(Exception):
+    pass
+
 class RequestNotRecorded(Http404):
     pass
 

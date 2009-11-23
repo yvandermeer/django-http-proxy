@@ -2,19 +2,19 @@ from httpproxy import settings
 from httpproxy.recorder import ProxyRecorder
 
 
-recorder = ProxyRecorder(settings.PROXY_DOMAIN, settings.PROXY_PORT)
+proxy = ProxyRecorder(settings.PROXY_DOMAIN, settings.PROXY_PORT)
 
 def record(fn):
     """
     Decorator for recording the request being made and its response.
     """
     def decorate(request, url, *args, **kwargs):
-        recorded_request = recorder.record_request(request)
         
         # Make the actual live request as usual
         response = fn(request, url, *args, **kwargs)
         
-        recorder.record_response(recorded_request, response)
+        # Record the request and response
+        proxy.record(request, response)
 
         return response
     return decorate
@@ -26,6 +26,6 @@ def play(fn):
     previously recorded request/response.
     """
     def decorate(request, url, *args, **kwargs):
-        return recorder.playback_response(request)
+        return proxy.playback(request)
         
     return decorate

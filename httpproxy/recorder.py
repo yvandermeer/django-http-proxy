@@ -2,9 +2,19 @@ import logging
 
 from django.http import HttpResponse
 
-from httpproxy.exceptions import RequestNotRecorded
+from httpproxy.exceptions import RequestNotRecorded, ResponseUnsupported
 from httpproxy.models import Request, Response
 
+
+RESPONSE_TYPES_SUPPORTED = (
+    'application/javascript',
+    'application/xml',
+    'text/css',
+    'text/html',
+    'text/javascript',
+    'text/plain',
+    'text/xml',
+)
 
 logger = logging.getLogger(__package__)
 logger.setLevel(logging.DEBUG)
@@ -17,6 +27,15 @@ class ProxyRecorder(object):
     def __init__(self, domain, port):
         super(ProxyRecorder, self).__init__()
         self.domain, self.port = domain, port
+    
+    def record(self, request, response):
+        """
+        Attempts to record the request and the corresponding response.
+        """
+        if not self.response_supported(response):
+            raise ResponseUnsupported('Response of type "%s" could not be recorded.' % response['Content-Type'])
+        recorded_request = self.record_request(request)
+        self.record_response(recorded_request, response)
     
     def record_request(self, request):
         """
@@ -64,7 +83,7 @@ class ProxyRecorder(object):
             content=response.content.decode(encoding), 
         )
     
-    def playback_response(self, request):
+    def playback(self, request):
         """
         Returns a previously recorded response based on the provided request.
         """
@@ -89,6 +108,9 @@ class ProxyRecorder(object):
             mimetype=response.content_type
         )
     
+    def response_supported(self, response):
+        return response['Content-Type'].partition(';')[0] in RESPONSE_TYPES_SUPPORTED
+    
     def _get_encoding(self, content_type):
         """
         Extracts the character encoding from a HTTP Content-Type header.
@@ -104,3 +126,4 @@ class ProxyRecorder(object):
             'port': self.port, 
             'path': request.get_full_path()
         }
+    

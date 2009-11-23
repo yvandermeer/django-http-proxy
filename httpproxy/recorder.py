@@ -2,6 +2,7 @@ import logging
 
 from django.http import HttpResponse
 
+from httpproxy import settings
 from httpproxy.exceptions import RequestNotRecorded, ResponseUnsupported
 from httpproxy.models import Request, Response
 
@@ -32,10 +33,11 @@ class ProxyRecorder(object):
         """
         Attempts to record the request and the corresponding response.
         """
-        if not self.response_supported(response):
+        if self.response_supported(response):
+            recorded_request = self.record_request(request)
+            self.record_response(recorded_request, response)
+        elif not settings.PROXY_IGNORE_UNSUPPORTED:
             raise ResponseUnsupported('Response of type "%s" could not be recorded.' % response['Content-Type'])
-        recorded_request = self.record_request(request)
-        self.record_response(recorded_request, response)
     
     def record_request(self, request):
         """

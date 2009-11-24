@@ -1,6 +1,14 @@
 Changes & News
 --------------
 
+0.2.1
+~~~~~
+
+* Fixed `issue #1 <http://bitbucket.org/yvandermeer/django-http-proxy/issue/1/>`_;
+  Unsupported content types are now silently ignored.
+* Added ``PROXY_IGNORE_UNSUPPORTED`` setting to control the behavior for
+  handling unsupported responses (see :doc:`settings`).
+
 0.2
 ~~~
 

@@ -1,6 +1,11 @@
 Changes & News
 --------------
 
+0.2.2
+~~~~~
+
+* Removed print statement I accidentally left behind.
+
 0.2.1
 ~~~~~
 

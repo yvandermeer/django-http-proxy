@@ -89,7 +89,6 @@ class ProxyRecorder(object):
         """
         Returns a previously recorded response based on the provided request.
         """
-        print self.port
         try:
             matching_request = Request.objects.filter(
                 domain=self.domain,

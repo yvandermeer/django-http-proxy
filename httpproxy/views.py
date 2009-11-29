@@ -4,7 +4,7 @@ from django.http import HttpResponse
 
 from httpproxy import settings
 from httpproxy.exceptions import UnkownProxyMode
-from httpproxy.decorators import normalize_request
+from httpproxy.decorators import normalize_request, rewrite_response
  
 
 PROXY_FORMAT = u'http://%s:%d%s' % (settings.PROXY_DOMAIN, settings.PROXY_PORT, u'%s')
@@ -38,6 +38,9 @@ if settings.PROXY_MODE is not None:
         raise UnkownProxyMode('The proxy mode "%s" could not be found. Please specify a corresponding decorator function in "%s.decorators".' % (proxy_mode, 'httpproxy'))
     else:
         proxy = decorator(proxy)
+
+if settings.PROXY_REWRITE_RESPONSE:
+    proxy = rewrite_response(proxy)
 
 # The request object should always be normalized
 proxy = normalize_request(proxy)

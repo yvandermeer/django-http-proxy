@@ -22,3 +22,5 @@ if hasattr(settings, 'PROXY_USER') and hasattr(settings, 'PROXY_PASSWORD'):
 PROXY_MODE = getattr(settings, 'PROXY_MODE', None)
 
 PROXY_IGNORE_UNSUPPORTED = getattr(settings, 'PROXY_IGNORE_UNSUPPORTED', True)
+
+PROXY_REWRITE_RESPONSE = getattr(settings, 'PROXY_REWRITE_RESPONSE', False)

@@ -1,6 +1,11 @@
 Changes & News
 --------------
 
+hgtip
+~~~~~
+
+* Fixed Python 2.5 support by removing use of ``__package__``
+
 0.2.2
 ~~~~~
 

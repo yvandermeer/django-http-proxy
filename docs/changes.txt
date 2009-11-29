@@ -1,12 +1,15 @@
 Changes & News
 --------------
 
-hgtip
-~~~~~
+0.3
+~~~
 
 * Fixed Python 2.5 support by removing use of ``__package__``
 * Implemented request path "normalization", fixing record and playback if the
   proxy is URL-configured anywhere other than directly in the root.
+* Added experimental ``PROXY_REWRITE_RESPONSES`` settings to fix paths to
+  resources (images, javascript, etc) on the same domain if ``httproxy`` is
+  not configured at the root.
 
 0.2.2
 ~~~~~

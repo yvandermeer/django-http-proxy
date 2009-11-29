@@ -74,3 +74,32 @@ content types when ``PROXY_MODE`` is set to ``record`` – responses with
 unsupported content types are not recorded and will be ignored silently. If
 you set ``PROXY_IGNORE_UNSUPPORTED`` to ``False``, any unsupported response
 types will raise a ``ResponseUnsupported`` exception.
+
+PROXY_REWRITE_RESPONSES
+-----------------------
+Default: ``False``
+
+Although the most common usage is probably to serve the proxy view from the
+root of your project, it is also possible to prefix the proxy'd URLs::
+
+    urlpatterns += patterns('',
+        (r'^mygoogle/(?P<url>.*)$', 'httpproxy.views.proxy'),
+    )
+
+While the requests themselves will work fine, the responses may still contain
+references to resources as if they were served at the root. For instance, the
+Google homepage contains an ``<img>`` tag with the Google logo::
+
+    <img alt="Google" height=110 src="/intl/en_ALL/images/logo.gif">
+
+This would normally result in a ``404``, because there is no such URL in your
+application.
+
+By setting ``PROXY_REWRITE_RESPONSES`` to ``True``, the response will be
+rewritten to try to fix the paths. In the above case, the response would now contain::
+
+    <img alt="Google" height=110 src="/mygoogle/intl/en_ALL/images/logo.gif">
+
+*NOTE: The rewrite logic uses a fairly simple regular expression to look for
+"src", "href" and "action" attributes with a value starting with "/" – your
+results may vary.*

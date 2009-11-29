@@ -39,7 +39,7 @@ if settings.PROXY_MODE is not None:
     else:
         proxy = decorator(proxy)
 
-if settings.PROXY_REWRITE_RESPONSE:
+if settings.PROXY_REWRITE_RESPONSES:
     proxy = rewrite_response(proxy)
 
 # The request object should always be normalized

@@ -5,6 +5,8 @@ hgtip
 ~~~~~
 
 * Fixed Python 2.5 support by removing use of ``__package__``
+* Implemented request path "normalization", fixing record and playback if the
+  proxy is URL-configured anywhere other than directly in the root.
 
 0.2.2
 ~~~~~

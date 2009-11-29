@@ -17,7 +17,7 @@ RESPONSE_TYPES_SUPPORTED = (
     'text/xml',
 )
 
-logger = logging.getLogger(__package__)
+logger = logging.getLogger('httpproxy')
 logger.setLevel(logging.DEBUG)
 
 class ProxyRecorder(object):

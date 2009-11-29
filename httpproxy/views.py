@@ -31,9 +31,9 @@ def proxy(request, url):
 if settings.PROXY_MODE is not None:
     proxy_mode = settings.PROXY_MODE
     try:
-        decorator = getattr(__import__(__package__ + '.decorators', fromlist=proxy_mode), proxy_mode)
+        decorator = getattr(__import__('httpproxy' + '.decorators', fromlist=proxy_mode), proxy_mode)
     except AttributeError, e:
-        raise UnkownProxyMode('The proxy mode "%s" could not be found. Please specify a corresponding decorator function in "%s.decorators".' % (proxy_mode, __package__))
+        raise UnkownProxyMode('The proxy mode "%s" could not be found. Please specify a corresponding decorator function in "%s.decorators".' % (proxy_mode, 'httpproxy'))
     else:
         proxy = decorator(proxy)
     

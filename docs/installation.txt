@@ -4,9 +4,9 @@ Installation
 Requirements
 ------------
 
-Django HTTP Proxy has been tested on Python 2.6 with Django 1.1.1, but should
-work on earlier releases as well. In addition, the package depends on the
-httplib2 python package.
+Django HTTP Proxy is compatible with Python 2.5.x and Python 2.6.x. It was
+testing with Django 1.1.1, but should work on earlier releases as well. In
+addition, the package depends on the httplib2 python package.
 
 A `pip requirements file <http://pip.openplans.org/#requirements-files>`_ is
 provided to allow easy installation of the prerequisites.

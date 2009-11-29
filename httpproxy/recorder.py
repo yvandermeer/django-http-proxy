@@ -122,7 +122,7 @@ class ProxyRecorder(object):
         """
         Helper for getting a string representation of a request.
         """
-        return '%(domain)s:%(port)d%(path)s"' % {
+        return '%(domain)s:%(port)d%(path)s' % {
             'domain': self.domain, 
             'port': self.port, 
             'path': request.get_full_path()

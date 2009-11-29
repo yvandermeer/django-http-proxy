@@ -4,12 +4,14 @@ from django.http import HttpResponse
 
 from httpproxy import settings
 from httpproxy.exceptions import UnkownProxyMode
+from httpproxy.decorators import normalize_request
  
 
-PROXY_FORMAT = u'http://%s:%d/%s' % (settings.PROXY_DOMAIN, settings.PROXY_PORT, u'%s')
+PROXY_FORMAT = u'http://%s:%d%s' % (settings.PROXY_DOMAIN, settings.PROXY_PORT, u'%s')
 
-def proxy(request, url):
+def proxy(request):
     conn = httplib2.Http()
+    url = request.path
     
     # Optionally provide authentication for server
     try:
@@ -36,4 +38,6 @@ if settings.PROXY_MODE is not None:
         raise UnkownProxyMode('The proxy mode "%s" could not be found. Please specify a corresponding decorator function in "%s.decorators".' % (proxy_mode, 'httpproxy'))
     else:
         proxy = decorator(proxy)
-    
+
+# The request object should always be normalized
+proxy = normalize_request(proxy)

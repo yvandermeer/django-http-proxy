@@ -1,6 +1,13 @@
 Changes & News
 --------------
 
+0.3.1
+~~~~~
+
+* Fixed 250 character limitation for querystring in Recorded Request 
+  (`issue #2 <http://bitbucket.org/yvandermeer/django-http-proxy/issue/2/>`_)
+* Added new Request Parameter model; requires ``./manage.py reset httpproxy && ./manage.py syncdb``
+
 0.3
 ~~~
 

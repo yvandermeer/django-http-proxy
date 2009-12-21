@@ -1,5 +1,9 @@
 syntax:glob
 *.pyc
+*.tmproj
+*.diff
+*.patch
+*.log
 .DS_Store
 MANIFEST
 build

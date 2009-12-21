@@ -1,6 +1,7 @@
 import logging
 
 from django.http import HttpResponse
+from django.utils.hashcompat import md5_constructor
 
 from httpproxy import settings
 from httpproxy.exceptions import RequestNotRecorded, ResponseUnsupported
@@ -49,14 +50,34 @@ class ProxyRecorder(object):
             domain=self.domain,
             port=self.port,
             path=request.path,
-            querystring=request.GET.urlencode(),
+            querykey=self._get_query_key(request),
         )
+        
+        self.record_request_parameters(request, recorded_request)
         
         # Update the timestamp on the existing recorded request
         if not created:
             recorded_request.save()
         
         return recorded_request
+    
+    def record_request_parameters(self, request, recorded_request):
+        """
+        Records the request parameters for the recorded request.
+        
+        The order field is set to reflect the order in which the QueryDict
+        returns the GET parameters.
+        """
+        recorded_request.parameters.get_query_set().delete()
+        position = 1
+        for name, values_list in request.GET.lists():
+            for value in values_list:
+                recorded_request.parameters.create(
+                    order=position,
+                    name=name,
+                    value=value,
+                )
+                position += 1
     
     def record_response(self, recorded_request, response):
         """
@@ -93,8 +114,8 @@ class ProxyRecorder(object):
             matching_request = Request.objects.filter(
                 domain=self.domain,
                 port=self.port,
-                path=request.path, 
-                querystring=request.GET.urlencode()
+                path=request.path,
+                querykey=self._get_query_key(request)
             ).latest()
         except Request.DoesNotExist, e:
             raise RequestNotRecorded('The request made has not been recorded yet. Please run httpproxy in "record" mode first.')
@@ -127,4 +148,11 @@ class ProxyRecorder(object):
             'port': self.port, 
             'path': request.get_full_path()
         }
+    
+    def _get_query_key(self, request):
+        """
+        Returns an MD5 has of the request's query parameters.
+        """
+        querystring = request.GET.urlencode()
+        return md5_constructor(querystring).hexdigest()
     

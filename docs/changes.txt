@@ -1,6 +1,11 @@
 Changes & News
 --------------
 
+0.3.2
+~~~~~
+
+* Limited display of request querystring in admin screen to 50 characters
+
 0.3.1
 ~~~~~
 

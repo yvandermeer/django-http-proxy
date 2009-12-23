@@ -16,6 +16,14 @@ class Request(models.Model):
     def querystring(self):
         return self.parameters.urlencode()
 
+    def querystring_display(self):
+        maxlength = 50
+        if len(self.querystring) > maxlength:
+            return '%s [...]' % self.querystring[:50]
+        else:
+            return self.querystring
+    querystring_display.short_description = 'querystring'
+
     def __unicode__(self):
         output = u'%s:%d%s' % (self.domain, self.port, self.path)
         if self.querystring:

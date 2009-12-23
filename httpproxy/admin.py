@@ -11,7 +11,7 @@ class RequestParameterInline(admin.TabularInline):
     extra = 1
 
 class RequestAdmin(admin.ModelAdmin):
-    list_display = ('domain', 'port', 'path', 'querystring', 'date')
+    list_display = ('domain', 'port', 'path', 'querystring_display', 'date')
     list_filter = ('domain', 'port')
     inlines = [RequestParameterInline, ResponseInline]
 

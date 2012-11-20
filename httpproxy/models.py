@@ -6,12 +6,13 @@ from django.utils.translation import ugettext as _
 
 
 class Request(models.Model):
-    domain = models.CharField(_('domain'), max_length=100)  
+    method = models.CharField(_('method'), max_length=20)
+    domain = models.CharField(_('domain'), max_length=100)
     port = models.PositiveSmallIntegerField(default=80)
     path = models.CharField(_('path'), max_length=250)
     date = models.DateTimeField(auto_now=True)
     querykey = models.CharField(_('query key'), max_length=255, editable=False)
-    
+
     @property
     def querystring(self):
         return self.parameters.urlencode()
@@ -25,7 +26,8 @@ class Request(models.Model):
     querystring_display.short_description = 'querystring'
 
     def __unicode__(self):
-        output = u'%s:%d%s' % (self.domain, self.port, self.path)
+        output = u'%s %s:%d%s' % \
+                (self.method, self.domain, self.port, self.path)
         if self.querystring:
             output += '?%s' % self.querystring
         return output[:50] # TODO add elipsed if truncating
@@ -33,18 +35,18 @@ class Request(models.Model):
     class Meta:
         verbose_name = _('request')
         verbose_name_plural = _('requests')
-        unique_together = ('domain', 'port', 'path', 'querykey')
+        unique_together = ('method', 'domain', 'port', 'path', 'querykey')
         get_latest_by = 'date'
 
 
 class RequestParameterManager(models.Manager):
-    
+
     def urlencode(self):
         output = []
         for param in self.values('name', 'value'):
             output.extend([urlencode({param['name']: param['value']})])
         return '&'.join(output)
-    
+
 
 class RequestParameter(models.Model):
     REQUEST_TYPES = (
@@ -65,14 +67,14 @@ class RequestParameter(models.Model):
         ordering = ('order',)
         verbose_name = _('request parameter')
         verbose_name_plural = _('request parameters')
-    
+
 
 class Response(models.Model):
     request = models.OneToOneField(Request, verbose_name=_('request'))
     status = models.PositiveSmallIntegerField(default=200)
     content_type = models.CharField(_('content type'), max_length=200)
     content = models.TextField(_('content'))
-    
+
     @property
     def request_domain(self):
         return self.request.domain
@@ -80,7 +82,7 @@ class Response(models.Model):
     @property
     def request_path(self):
         return self.request.path
-    
+
     @property
     def request_querystring(self):
         return self.request.querystring

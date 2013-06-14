@@ -1,7 +1,10 @@
 from urllib import urlencode
 
 from django.db import models
-from django.utils.text import truncate_words
+try:
+    from django.utils.text import Truncator as truncate_words
+except ImportError:
+    from django.utils.text import truncate_words
 from django.utils.translation import ugettext as _
 
 

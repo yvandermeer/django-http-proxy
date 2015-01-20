@@ -6,12 +6,12 @@ from django.utils.translation import ugettext as _
 
 
 class Request(models.Model):
-    domain = models.CharField(_('domain'), max_length=100)  
+    domain = models.CharField(_('domain'), max_length=100)
     port = models.PositiveSmallIntegerField(default=80)
     path = models.CharField(_('path'), max_length=250)
     date = models.DateTimeField(auto_now=True)
     querykey = models.CharField(_('query key'), max_length=255, editable=False)
-    
+
     @property
     def querystring(self):
         return self.parameters.urlencode()
@@ -38,13 +38,13 @@ class Request(models.Model):
 
 
 class RequestParameterManager(models.Manager):
-    
+
     def urlencode(self):
         output = []
         for param in self.values('name', 'value'):
             output.extend([urlencode({param['name']: param['value']})])
         return '&'.join(output)
-    
+
 
 class RequestParameter(models.Model):
     REQUEST_TYPES = (
@@ -65,14 +65,14 @@ class RequestParameter(models.Model):
         ordering = ('order',)
         verbose_name = _('request parameter')
         verbose_name_plural = _('request parameters')
-    
+
 
 class Response(models.Model):
     request = models.OneToOneField(Request, verbose_name=_('request'))
     status = models.PositiveSmallIntegerField(default=200)
     content_type = models.CharField(_('content type'), max_length=200)
     content = models.TextField(_('content'))
-    
+
     @property
     def request_domain(self):
         return self.request.domain
@@ -80,7 +80,7 @@ class Response(models.Model):
     @property
     def request_path(self):
         return self.request.path
-    
+
     @property
     def request_querystring(self):
         return self.request.querystring
@@ -91,3 +91,4 @@ class Response(models.Model):
     class Meta:
         verbose_name = _('response')
         verbose_name_plural = _('responses')
+

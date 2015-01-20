@@ -1,7 +1,10 @@
 import logging
 
 from django.http import HttpResponse
-from django.utils.hashcompat import md5_constructor
+try:
+    from hashlib import md5 as md5_constructor
+except ImportError:
+    from django.utils.hashcompat import md5_constructor
 
 from httpproxy import settings
 from httpproxy.exceptions import RequestNotRecorded, ResponseUnsupported

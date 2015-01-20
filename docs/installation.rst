@@ -53,21 +53,19 @@ Next, you should run ``syncdb`` to create the necessary database tables::
     $ ./manage.py syncdb
 
 To use Django HTTP Proxy, you create an entry in your ``urls.py`` that forwards
-requests to the ``httpproxy.views.proxy`` view, e.g.::
+requests to the ``httpproxy.views.HttpProxy`` view class, e.g.::
+
+    from httpproxy.views import HttpProxy
 
     urlpatterns += patterns('',
-        (r'^(?P<url>.*)$', 'httpproxy.views.proxy'),
+        (r'^(?P<url>.*)$', HttpProxy.as_view(base_url = settings.PROXY_BASE_URL)),
     )
     
 Given the above url config, all requests will be forwarded to the ``proxy``
 view function. The domain to which the proxy will forward request can be
-configured using the ``PROXY_DOMAIN`` setting::
+configured using the ``PROXY_BASE_URL`` setting::
 
-    PROXY_DOMAIN = 'www.google.com'
-
-Optionally, you can specify a port number (defaults to 80)::
-
-    PROXY_PORT = 8080
+    PROXY_BASE_URL = 'http://www.google.com'
 
 For a complete overview of possible settings, see :doc:`settings`.
 

@@ -1,7 +1,8 @@
-from django.http import Http404
 """
 Some generic exceptions that can occur in Django HTTP Proxy
 """
+from django.http import Http404
+
 
 class UnkownProxyMode(Exception):
     pass

@@ -68,4 +68,3 @@ configured using the ``PROXY_BASE_URL`` setting::
     PROXY_BASE_URL = 'http://www.google.com'
 
 For a complete overview of possible settings, see :doc:`settings`.
-

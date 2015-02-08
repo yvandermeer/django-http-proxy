@@ -18,7 +18,6 @@ class RequestAdmin(admin.ModelAdmin):
     inlines = (RequestParameterInline, ResponseInline)
 
 
-
 class ResponseAdmin(admin.ModelAdmin):
     list_display = ('request_domain', 'request_path', 'request_querystring', 'status', 'content_type')
     list_filter = ('status', 'content_type')

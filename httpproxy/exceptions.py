@@ -14,4 +14,3 @@ class ResponseUnsupported(Exception):
 
 class RequestNotRecorded(Http404):
     pass
-

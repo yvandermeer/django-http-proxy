@@ -15,3 +15,6 @@ insert_final_newline = true
 [*.md]
 # Markdown uses trailing whitespace for manual linebreaks
 trim_trailing_whitespace = false
+
+[*.rst]
+trim_trailing_whitespace = false

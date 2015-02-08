@@ -58,4 +58,3 @@ If you have any contributions, feel free to fork Django HTTP Proxy on
 Bitbucket: 
 
 http://bitbucket.org/yvandermeer/django-http-proxy/fork/
-

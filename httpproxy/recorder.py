@@ -107,7 +107,7 @@ class ProxyRecorder(object):
             matching_request = Request.objects.filter(method=request.method,
                     domain=self.domain, port=self.port, path=request.path,
                     querykey=self._get_query_key(request)).latest()
-        except Request.DoesNotExist, e:
+        except Request.DoesNotExist:
             raise RequestNotRecorded('The request made has not been ' \
                     'recorded yet. Please run httpproxy in "record" mode ' \
                     'first.')
@@ -145,4 +145,3 @@ class ProxyRecorder(object):
         """
         querystring = request.GET.urlencode()
         return md5_constructor(querystring).hexdigest()
-

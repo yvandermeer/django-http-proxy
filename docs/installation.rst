@@ -34,7 +34,7 @@ manually install the package::
 
 To automatically install the dependencies using ``pip``, you can run::
 
-    $ pip install -r requirements/libs.txt
+    $ pip install -r requirements.txt
 
 Configuration
 -------------

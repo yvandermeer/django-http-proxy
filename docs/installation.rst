@@ -29,11 +29,7 @@ in your Django settings module (typically `settings.py`)::
         'httpproxy',
     )
 
-Finally, install the database tables. For Django 1.7 and up::
-
-    $ python manage.py migrate httpproxy
-
-For older version of Django, simply run `syncdb`::
+Finally, install the database tables::
 
     $ python manage.py syncdb
 

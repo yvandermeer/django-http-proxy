@@ -3,3 +3,5 @@ include README
 recursive-include docs *
 recursive-exclude docs/_build *.*
 recursive-include requirements *
+include versioneer.py
+include httpproxy/_version.py

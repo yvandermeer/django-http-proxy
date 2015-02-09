@@ -1,20 +1,13 @@
 Django HTTP Proxy
 =================
 
-.. note::
-    
-    This project has moved from `Bitbucket <bitbucket_>`_ to `Github <github_>`_.
-
 Django HTTP Proxy provides simple HTTP proxy functionality for the Django web
-development framework. It allows you make requests to an external server by 
-requesting them from the main server running your Django application. In 
-addition, it allows you to record the responses to those requests and play them 
-back at any time.
+development framework.
 
-One possible use for this application (actually, the reason it was developed)
-is to allow for easy development of Ajax applications against a live server
-environment:
+Features
+--------
 
+* Configure one or more HTTP proxies in your Django project.
 * Avoid typical cross-domain issues while developing an Ajax application based
   on live data from another server.
 * Record responses and play them back at a later time:
@@ -22,15 +15,5 @@ environment:
     * Speedy responses instead of having to wait for a remote server
 * Manually edit recorded responses via the Django admin interface
 
-Combined with the standard `Django development server <http://docs.djangoproject.com/en/dev/ref/django-admin/#runserver>`_, 
-you have a useful toolkit for developing HTML5/Ajax applications.
-
-Django HTTP Proxy is licensed under an `MIT-style permissive license <license>`_ and
-`maintained on Github <http://github.com/yvandermeer/django-http-proxy/>`_.
-
-Documentation can be found on `Read the Docs <rtd_>`_.
-
-
-.. _bitbucket: https://bitbucket.org/yvandermeer/django-http-proxy
-.. _github: https://github.com/yvandermeer/django-http-proxy
-.. _rtd: http://django-http-proxy.readthedocs.org/
+Documentation can be found on 
+`Read the Docs <http://django-http-proxy.readthedocs.org/>`_.

@@ -11,6 +11,8 @@ Changes
 * Merged pull request from `Garrett Seward <https://github.com/spectralsun>`_ (thanks!)
 * Added Django 1.7 compatibility
 * Added database migrations (Django 1.7 and higher only)
+* Updated and improvement the documentation (including :doc:`API documentation <api/index>`)
+* Added an ``example`` project for reference
 * Using urllib2 instead of httplib2
 * Using setuptools instead of distutils
 * Using versioneer2 for package versioning
@@ -49,7 +51,7 @@ Changes
 * Fixed `issue #1 <http://bitbucket.org/yvandermeer/django-http-proxy/issue/1/>`_;
   Unsupported content types are now silently ignored.
 * Added ``PROXY_IGNORE_UNSUPPORTED`` setting to control the behavior for
-  handling unsupported responses (see :doc:`settings`).
+  handling unsupported responses.
 
 0.2
 ~~~

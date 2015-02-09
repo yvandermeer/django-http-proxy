@@ -1,4 +1,5 @@
 import logging
+import re
 import urllib2
 from urlparse import urlparse
 
@@ -10,21 +11,32 @@ from httpproxy.recorder import ProxyRecorder
 
 logger = logging.getLogger(__name__)
 
+
+REWRITE_REGEX = re.compile(r'((?:src|action|href)=["\'])/(?!\/)')
+
 class HttpProxy(View):
 
     mode = None
     base_url = None
     msg = 'Response body: \n%s'
+    rewrite = True
 
     def dispatch(self, request, url, *args, **kwargs):
         self.url = url
+        self.original_request_path = request.path
         request = self.normalize_request(request)
         if self.mode == 'play':
-            return self.play(request)
+            response = self.play(request)
+            # TODO: avoid repetition, flow of logic could be improved
+            if self.rewrite:
+                response = self.rewrite_response(request, response)
+            return response
 
         response = super(HttpProxy, self).dispatch(request, *args, **kwargs)
         if self.mode == 'record':
             self.record(response)
+        if self.rewrite:
+            response = self.rewrite_response(request, response)
         return response
 
     def normalize_request(self, request):
@@ -41,6 +53,16 @@ class HttpProxy(View):
         request.path_info = self.url
         request.META['PATH_INFO'] = self.url
         return request
+
+    def rewrite_response(self, request, response):
+        """
+        Rewrites the response to fix references to resources loaded from HTML
+        files (images, etc.).
+        """
+        proxy_root = self.original_request_path.rsplit(request.path, 1)[0]
+        response.content = REWRITE_REGEX.sub(r'\1{}/'.format(proxy_root),
+                response.content)
+        return response
 
     def play(self, request):
         """

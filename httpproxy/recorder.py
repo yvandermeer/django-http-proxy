@@ -117,7 +117,7 @@ class ProxyRecorder(object):
         encoding = self._get_encoding(response.content_type)
 
         return HttpResponse(response.content.encode(encoding),
-                status=response.status, mimetype=response.content_type)
+                status=response.status, content_type=response.content_type)
 
     def response_supported(self, response):
         return response['Content-Type'].partition(';')[0] \

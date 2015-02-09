@@ -15,7 +15,7 @@ setup(
     cmdclass=versioneer.get_cmdclass(),
     description='A simple HTTP proxy for the Django framework.',
     author='Yuri van der Meer',
-    author_email='django-http-proxy@yvandermeer.net',
+    author_email='contact@yvandermeer.net',
     url='http://django-http-proxy.readthedocs.org/',
     packages=find_packages(),
     install_requires=[

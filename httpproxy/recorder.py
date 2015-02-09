@@ -1,12 +1,13 @@
+# -*- coding: utf-8 -*-
 import logging
 
+from django.conf import settings
 from django.http import HttpResponse
 try:
     from hashlib import md5 as md5_constructor
 except ImportError:
     from django.utils.hashcompat import md5_constructor
 
-from httpproxy import settings
 from httpproxy.exceptions import RequestNotRecorded, ResponseUnsupported
 from httpproxy.models import Request, Response
 
@@ -35,11 +36,26 @@ class ProxyRecorder(object):
     def record(self, request, response):
         """
         Attempts to record the request and the corresponding response.
+
+        .. note::
+            The recording functionality of the Django HTTP Proxy is currently
+            limited to plain text content types. The default behavior is to
+            *ignore* any unsupported content types when
+            :attr:`httpproxy.views.HttpProxy.mode` is set to ``record`` –
+            responses with unsupported content types are not recorded and will
+            be ignored silently. To prevent this, put this in your Django
+            settings module::
+
+                PROXY_IGNORE_UNSUPPORTED = False
+
+            Doing so will raise a
+            :class:`~httpproxy.exceptions.ResponseUnsupported` exception if any
+            unsupported response type is encountered in "record" mode.
         """
         if self.response_supported(response):
             recorded_request = self.record_request(request)
             self.record_response(recorded_request, response)
-        elif not settings.PROXY_IGNORE_UNSUPPORTED:
+        elif not getattr(settings, 'PROXY_IGNORE_UNSUPPORTED', True):
             raise ResponseUnsupported('Response of type "%s" could not be recorded.' % response['Content-Type'])
 
     def record_request(self, request):
@@ -83,7 +99,6 @@ class ProxyRecorder(object):
         its request parameters to allow for reverse-finding the recorded
         response given the recorded request object.
         """
-
         # Delete the previously recorded response, if any
         try:
             recorded_request.response.delete()

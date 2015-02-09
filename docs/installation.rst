@@ -1,70 +1,77 @@
-Installation
-============
+Installation & configuration
+============================
 
 Requirements
 ------------
 
-Django HTTP Proxy is compatible with Python 2.5.x and Python 2.6.x. It was
-testing with Django 1.1.1, but should work on earlier releases as well. In
-addition, the package depends on the httplib2 python package.
+Django HTTP Proxy should be compatible with any Python 2.x version from 2.5 and 
+up and a relatively recent version of Django. It is compatible with Django 1.7.
 
-A `pip requirements file <http://pip.openplans.org/#requirements-files>`_ is
-provided to allow easy installation of the prerequisites.
 
-Download & Install
-------------------
+Installation
+------------
 
-Django HTTP Proxy is `available on the Python Package Index <http://pypi.python.org/pypi/django-http-proxy>`_.
-
-As such, you can easily install the latest release using
-`easy_install <http://pypi.python.org/pypi/setuptools>`_::
-
-    $ easy_install django-http-proxy
-
-or using `pip <http://pypi.python.org/pypi/pip>`_::
+The easiest way to install the latest version of Django HTTP Proxy is using 
+`pip <http://pypi.python.org/pypi/pip>`_::
 
     $ pip install django-http-proxy
 
-Alternatively, you can clone the Mercurial repository from Bitbucket and
-manually install the package::
+Alternatively, you can manually download the package from the `Python Package Index <http://pypi.python.org/pypi/django-http-proxy>`_ or from the `Github repository <github_>`_.
 
-    $ hg clone http://bitbucket.org/yvandermeer/django-http-proxy/
-    $ cd django-http-proxy
-    $ python setup.py install
+.. _github: https://github.com/yvandermeer/django-http-proxy
 
-To automatically install the dependencies using ``pip``, you can run::
 
-    $ pip install -r requirements.txt
-
-Configuration
--------------
-
-After you've installed the ``django-http-proxy`` package to your site-packages
-directory (or any other location on your python path), you need to add
-``httpproxy`` to your installed app in the Django ``settings.py`` file::
+Next, you need to add ``httpproxy`` to the `INSTALLED_APPS` list 
+in your Django settings module (typically `settings.py`)::
 
     INSTALLED_APPS = (
         ...
         'httpproxy',
     )
 
-Next, you should run ``syncdb`` to create the necessary database tables::
+Finally, install the database tables. For Django 1.7 and up::
 
-    $ ./manage.py syncdb
+    $ python manage.py migrate httpproxy
+
+For older version of Django, simply run `syncdb`::
+
+    $ python manage.py syncdb
+
+
+Configuration
+-------------
+
+The core of Django HTTP Proxy is a class-based Django view, 
+:class:`httpproxy.views.HttpProxy`.
 
 To use Django HTTP Proxy, you create an entry in your ``urls.py`` that forwards
-requests to the ``httpproxy.views.HttpProxy`` view class, e.g.::
+requests to the :class:`~httpproxy.views.HttpProxy` view class, e.g.::
 
     from httpproxy.views import HttpProxy
 
     urlpatterns += patterns('',
-        (r'^(?P<url>.*)$', HttpProxy.as_view(base_url = settings.PROXY_BASE_URL)),
+        (r'^proxy/(?P<url>.*)$', 
+            HttpProxy.as_view(base_url='http://www.python.org/')),
     )
     
-Given the above url config, all requests will be forwarded to the ``proxy``
-view function. The domain to which the proxy will forward request can be
-configured using the ``PROXY_BASE_URL`` setting::
+Given the above url config, request matching ``/proxy/<any-url>`` will be 
+handled by the configured :class:`~httpproxy.views.HttpProxy` view instance and 
+forwarded to ``http://www.python.org/<any-url>``.
 
-    PROXY_BASE_URL = 'http://www.google.com'
+.. note::
 
-For a complete overview of possible settings, see :doc:`settings`.
+    Older versions of Django HTTP Proxy only supported a single proxy per Django 
+    project, which had to be configured using a Django setting::
+
+        PROXY_BASE_URL = 'http://www.python.org/'
+
+    Naturally, you can easily replicate this behavior using the new class-based 
+    view syntax::
+
+        from django.conf import settings
+        from httpproxy.views import HttpProxy
+
+        urlpatterns += patterns('',
+            (r'^proxy/(?P<url>.*)$', 
+                HttpProxy.as_view(base_url=settings.PROXY_BASE_URL)),
+        )

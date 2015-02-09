@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 import re
 import urllib2
@@ -15,11 +16,58 @@ logger = logging.getLogger(__name__)
 REWRITE_REGEX = re.compile(r'((?:src|action|href)=["\'])/(?!\/)')
 
 class HttpProxy(View):
+    """
+    Class-based view to configure Django HTTP Proxy for a URL pattern.
+
+    In its most basic usage::
+
+            from httpproxy.views import HttpProxy
+
+            urlpatterns += patterns('',
+                (r'^my-proxy/(?P<url>.*)$',
+                    HttpProxy.as_view(base_url='http://python.org/')),
+            )
+
+    Using the above configuration (and assuming your Django project is server by
+    the Django development server on port 8000), a request to
+    ``http://localhost:8000/my-proxy/index.html`` is proxied to
+    ``http://python.org/index.html``.
+    """
+
+    base_url = None
+    """
+    The base URL that the proxy should forward requests to.
+    """
 
     mode = None
-    base_url = None
-    msg = 'Response body: \n%s'
-    rewrite = True
+    """
+    The mode that the proxy should run in. Available modes are ``record`` and
+    ``play``. If no mode is defined (``None`` – the default), this means the proxy
+    will work as a "standard" HTTP proxy.
+
+    If the mode is set to ``record``, all requests will be forwarded to the remote
+    server, but both the requests and responses will be recorded to the database
+    for playback at a later stage.
+
+    If the mode is set to ``play``, no requests will be forwarded to the remote
+    server.
+
+    In ``play`` mode, if the response (to the request being made) was previously
+    recorded, the recorded response will be served. Otherwise, a custom
+    ``Http404`` exception will be raised
+    (:class:`~httpproxy.exceptions.RequestNotRecorded`).
+    """
+
+    rewrite = False
+    """
+    If you configure the HttpProxy view on any non-root URL, the proxied
+    responses may still contain references to resources as if they were served
+    at the root. By setting this attribute to ``True``, the response will be
+    :meth:`rewritten <httpproxy.views.HttpProxy.rewrite_response>` to try to
+    fix the paths.
+    """
+
+    _msg = 'Response body: \n%s'
 
     def dispatch(self, request, url, *args, **kwargs):
         self.url = url
@@ -41,8 +89,8 @@ class HttpProxy(View):
 
     def normalize_request(self, request):
         """
-        Updates all path-related info in the original request object with the url
-        given to the proxy
+        Updates all path-related info in the original request object with the
+        url given to the proxy.
 
         This way, any further processing of the proxy'd request can just ignore
         the url given to the proxy and use request.path safely instead.
@@ -58,6 +106,11 @@ class HttpProxy(View):
         """
         Rewrites the response to fix references to resources loaded from HTML
         files (images, etc.).
+
+        .. note::
+            The rewrite logic uses a fairly simple regular expression to look for
+            "src", "href" and "action" attributes with a value starting with "/"
+            – your results may vary.
         """
         proxy_root = self.original_request_path.rsplit(request.path, 1)[0]
         response.content = REWRITE_REGEX.sub(r'\1{}/'.format(proxy_root),
@@ -67,13 +120,13 @@ class HttpProxy(View):
     def play(self, request):
         """
         Plays back the response to a request, based on a previously recorded
-        request/response
+        request/response.
         """
         return self.get_recorder().playback(request)
 
     def record(self, response):
         """
-        Records the request being made and its response
+        Records the request being made and its response.
         """
         self.get_recorder().record(self.request, response)
 
@@ -88,17 +141,17 @@ class HttpProxy(View):
         try:
             response_body = response.read()
             status = response.getcode()
-            logger.debug(self.msg % response_body)
+            logger.debug(self._msg % response_body)
         except urllib2.HTTPError, e:
             response_body = e.read()
-            logger.error(self.msg % response_body)
+            logger.error(self._msg % response_body)
             status = e.code
         return HttpResponse(response_body, status=status,
                 content_type=response.headers['content-type'])
 
     def get_full_url(self, url):
         """
-        Constructs the full URL to be requested
+        Constructs the full URL to be requested.
         """
         param_str = self.request.GET.urlencode()
         request_url = u'%s/%s' % (self.base_url, url)

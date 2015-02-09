@@ -8,7 +8,17 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 # -- General configuration -----------------------------------------------------
 
-extensions = []
+extensions = [
+    'sphinx.ext.autodoc',
+]
+
+autodoc_member_order = 'bysource'
+
+# Bootstrap Django for autodoc
+import django
+from django.conf import settings
+settings.configure()
+django.setup()
 
 templates_path = ['_templates']
 

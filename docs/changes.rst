@@ -5,7 +5,8 @@ Changes
 ~~~
 
 * Migration from Bitbucket (Mercurial) to Github
-* Refactored main view using Django class-based views
+* Refactored main view using Django class-based views (see :class:`~httpproxy.views.HttpProxy`)
+* Removed basic authentication support (`PROXY_USER` and `PROXY_PASSWORD`); may be added back later on.
 * Finally merged back Django 1.6 fixes by `Petr Dlouhý <https://bitbucket.org/pdlouhy>`_ (thanks!)
 * Merged pull request from `Garrett Seward <https://github.com/spectralsun>`_ (thanks!)
 * Added Django 1.7 compatibility
@@ -53,7 +54,7 @@ Changes
 0.2
 ~~~
 
-* Added recording and playback functionality (see the new :ref:`setting-proxy-mode` setting)
+* Added recording and playback functionality
 * Improved handling of ``httpproxy``-specific settings
 * Started using Sphinx for documentation
 

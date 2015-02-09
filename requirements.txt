@@ -1,3 +1,4 @@
+Sphinx~=1.2.3
 versioneer2==0.1.10
 
 -e .

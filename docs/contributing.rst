@@ -6,6 +6,9 @@ Contributing
     This project has recently moved from `Bitbucket <bitbucket_>`_ to 
     `Github <github_>`_.
 
+.. _bitbucket: https://bitbucket.org/yvandermeer/django-http-proxy
+.. _github: https://github.com/yvandermeer/django-http-proxy
+
 If you have any contributions, feel free to
 `fork Django HTTP Proxy <https://github.com/yvandermeer/django-http-proxy/fork>`_.
 

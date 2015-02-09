@@ -23,8 +23,3 @@ you have a useful toolkit for developing HTML5/Ajax applications.
 
 Django HTTP Proxy is licensed under an `MIT-style permissive license <license>`_ and
 `maintained on Github <http://github.com/yvandermeer/django-http-proxy/>`_.
-
-
-.. _bitbucket: https://bitbucket.org/yvandermeer/django-http-proxy
-.. _github: https://github.com/yvandermeer/django-http-proxy
-.. _rtd: http://django-http-proxy.readthedocs.org/

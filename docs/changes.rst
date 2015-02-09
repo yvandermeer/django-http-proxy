@@ -1,5 +1,19 @@
-Changes & News
---------------
+Changes
+-------
+
+0.4
+~~~
+
+* Migration from Bitbucket (Mercurial) to Github
+* Refactored main view using Django class-based views
+* Finally merged back Django 1.6 fixes by `Petr Dlouhý <https://bitbucket.org/pdlouhy>`_ (thanks!)
+* Merged pull request from `Garrett Seward <https://github.com/spectralsun>`_ (thanks!)
+* Added Django 1.7 compatibility
+* Added database migrations (Django 1.7 and higher only)
+* Using urllib2 instead of httplib2
+* Using setuptools instead of distutils
+* Using versioneer2 for package versioning
+* Removed some unused imports and did some further code cleanup
 
 0.3.2
 ~~~~~

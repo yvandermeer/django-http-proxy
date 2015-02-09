@@ -1,6 +1,6 @@
-""""
+"""
 Django HTTP Proxy - A simple HTTP proxy for the Django framework.
 """
-
-__version__ = '0.3.2'
-__authors__ = ['Yuri van der Meer <django-http-proxy@yvandermeer.net>']
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions

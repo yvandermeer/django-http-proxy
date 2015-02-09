@@ -5,6 +5,16 @@ from django.utils.translation import ugettext as _
 
 
 class Request(models.Model):
+    """
+    An HTTP request recorded in the database.
+
+    Used by the :class:`~httpproxy.recorder.ProxyRecorder` to record all
+    identifying aspects of an HTTP request for matching later on when playing
+    back the response.
+
+    Request parameters are recorded separately, see
+    :class:`~httpproxy.models.RequestParameter`.
+    """
     method = models.CharField(_('method'), max_length=20)
     domain = models.CharField(_('domain'), max_length=100)
     port = models.PositiveSmallIntegerField(default=80)
@@ -14,6 +24,9 @@ class Request(models.Model):
 
     @property
     def querystring(self):
+        """
+        The URL-encoded set of request parameters.
+        """
         return self.parameters.urlencode()
 
     def querystring_display(self):
@@ -48,6 +61,10 @@ class RequestParameterManager(models.Manager):
 
 
 class RequestParameter(models.Model):
+    """
+    A single HTTP request parameter for a :class:`~httpproxy.models.Request`
+    object.
+    """
     REQUEST_TYPES = (
         ('G', 'GET'),
         ('P', 'POST'),
@@ -69,6 +86,10 @@ class RequestParameter(models.Model):
 
 
 class Response(models.Model):
+    """
+    The response that was recorded in response to the corresponding
+    :class:`~httpproxy.models.Request`.
+    """
     request = models.OneToOneField(Request, verbose_name=_('request'))
     status = models.PositiveSmallIntegerField(default=200)
     content_type = models.CharField(_('content type'), max_length=200)

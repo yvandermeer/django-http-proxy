@@ -60,7 +60,8 @@ class ProxyRecorder(object):
 
     def record_request(self, request):
         """
-        Saves the provided request, including its parameters.
+        Saves the provided :class:`~httpproxy.models.Request`, including its
+        :class:`~httpproxy.models.RequestParameter` objects.
         """
         logger.info('Recording: GET "%s"' % self._request_string(request))
 
@@ -78,7 +79,8 @@ class ProxyRecorder(object):
 
     def record_request_parameters(self, request, recorded_request):
         """
-        Records the request parameters for the recorded request.
+        Records the :class:`~httpproxy.models.RequestParameter` objects for the
+        recorded :class:`~httpproxy.models.Request`.
 
         The order field is set to reflect the order in which the QueryDict
         returns the GET parameters.
@@ -93,11 +95,13 @@ class ProxyRecorder(object):
 
     def record_response(self, recorded_request, response):
         """
-        Records a response so it can be replayed at a later stage.
+        Records a :class:`~httpproxy.models.Response` so it can be replayed at a
+        later stage.
 
-        The recorded response is linked to a previously recorded request and
-        its request parameters to allow for reverse-finding the recorded
-        response given the recorded request object.
+        The recorded response is linked to a previously recorded
+        :class:`~httpproxy.models.Request` and its request parameters to allow
+        for reverse-finding the recorded response given the recorded request
+        object.
         """
         # Delete the previously recorded response, if any
         try:

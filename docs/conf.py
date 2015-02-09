@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 from datetime import datetime
+from os.path import abspath, dirname, join
 
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
+sys.path.append(abspath(join(dirname(__file__), '_ext')))
 
 # -- General configuration -----------------------------------------------------
 
 extensions = [
     'sphinx.ext.autodoc',
 ]
+
+from django_models import process_docstring
+def setup(app):
+    app.connect('autodoc-process-docstring', process_docstring)
 
 autodoc_member_order = 'bysource'
 

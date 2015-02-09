@@ -121,12 +121,16 @@ class HttpProxy(View):
         """
         Plays back the response to a request, based on a previously recorded
         request/response.
+
+        Delegates to :class:`~httpproxy.recorder.ProxyRecorder`.
         """
         return self.get_recorder().playback(request)
 
     def record(self, response):
         """
         Records the request being made and its response.
+
+        Delegates to :class:`~httpproxy.recorder.ProxyRecorder`.
         """
         self.get_recorder().record(self.request, response)
 

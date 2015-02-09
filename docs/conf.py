@@ -12,6 +12,7 @@
 # serve to show the default.
 
 import os
+from datetime import datetime
 
 
 on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
@@ -41,7 +42,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Django HTTP Proxy'
-copyright = u'2009, Yuri van der Meer'
+copyright = u'2009-{}, Yuri van der Meer'.format(datetime.today().year)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

@@ -158,7 +158,7 @@ class HttpProxy(View):
         Constructs the full URL to be requested.
         """
         param_str = self.request.GET.urlencode()
-        request_url = u'%s/%s' % (self.base_url, url)
+        request_url = u'%s%s' % (self.base_url, url)
         request_url += '?%s' % param_str if param_str else ''
         return request_url
 

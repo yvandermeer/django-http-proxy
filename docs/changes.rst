@@ -1,6 +1,12 @@
 Changes
 -------
 
+0.4.1
+~~~~~
+
+* Python 3 compatibility (requires Django >= 1.6)
+* Fix duplicated forward slashes in urls
+
 0.4
 ~~~
 

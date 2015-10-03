@@ -1,6 +1,5 @@
-from urllib import urlencode
-
 from django.db import models
+from django.utils.six.moves import urllib
 from django.utils.translation import ugettext as _
 
 
@@ -56,7 +55,7 @@ class RequestParameterManager(models.Manager):
     def urlencode(self):
         output = []
         for param in self.values('name', 'value'):
-            output.extend([urlencode({param['name']: param['value']})])
+            output.extend([urllib.parse.urlencode({param['name']: param['value']})])
         return '&'.join(output)
 
 

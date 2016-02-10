@@ -1,6 +1,11 @@
 Changes
 -------
 
+0.4.2 (2016-02-10)
+~~~~~~~~~~~~~~~~~~
+
+* Merged `pull request <https://github.com/yvandermeer/django-http-proxy/pull/21>`_ from `Don Naegely <https://github.com/naegelyd>`_ (thanks!): Generate missing migrations
+
 0.4.1
 ~~~~~
 

@@ -1,6 +1,11 @@
 Changes
 -------
 
+0.4.3 (2016-02-10)
+~~~~~~~~~~~~~~~~~~
+
+* Merged `pull request <https://github.com/yvandermeer/django-http-proxy/pull/20>`_ from `Ihor Kucher <https://github.com/crash843>`_ (thanks!): add support of post requests & update headers setting
+
 0.4.2 (2016-02-10)
 ~~~~~~~~~~~~~~~~~~
 
